@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba Tiempo Real</title>
+    <!-- Traemos la librería de Socket.IO desde el mismo servidor -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>Notificaciones en Tiempo Real</h1>
+    <p>Abre esta página en dos pestañas distintas, luego visita <a href="/simular-subida" target="_blank">/simular-subida</a></p>
+    
+    <ul id="notificaciones"></ul>
+
+    <script>
+        // Nos conectamos a nuestro propio servidor
+        const socket = io();
+
+        // Escuchamos el evento 'nuevo-libro'
+        socket.on('nuevo-libro', (datos) => {
+            const lista = document.getElementById('notificaciones');
+            const item = document.createElement('li');
+            item.innerHTML = `<strong>${datos.titulo}</strong>: ${datos.mensaje}`;
+            lista.appendChild(item);
+        });
+    </script>
+</body>
+</html>
